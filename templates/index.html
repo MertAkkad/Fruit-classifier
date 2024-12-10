@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <title>Meyve Sınıflandırıcı</title>
+</head>
+<body>
+    <header>
+        <h1>What Fruit?</h1>
+    </header>
+    <div class="container_form">
+        <form id="upload-form">
+            <input type="file" id="image-input" accept="image/*" required>
+            <button type="submit">Search</button>
+        </form>
+        
+    </div>
+
+    <div class="container">
+        
+        <div id="loading">loading...</div>
+        <div id="result" style="display: none; flex: 1; padding-right: 20px;">
+            <h2>Result:</h2>
+            <img id="preview" src="" alt="Tahmin edilen meyve" style="max-width: 100%; height: auto;">
+            <p class="fruit-name" id="prediction"></p>
+            <p class="fruit-name" id="confidence"></p>
+        </div>
+        <div id="wiki-info" style="display: none; flex: 2;"> <!-- Wikipedia bilgisi için sağda bir alan -->
+            <!-- Wikipedia bilgisi buraya eklenecek -->
+        </div>
+        
+    </div>
+    <script src="static/js/main.js"></script>
+</body>
+</html>
