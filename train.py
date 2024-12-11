@@ -5,16 +5,17 @@ import os
 import matplotlib.pyplot as plt
 
 # Constants
-DATASET_PATH = "dataset/train"
+DATASET_PATH = "dataset/train" # (can be customized) train folder contains the class folders that contain images for each fruit. You can change the images according to your app`s purpose (can be customized) 
 IMAGE_SIZE = 224
-BATCH_SIZE = 40
-EPOCHS = 10
-NUM_CLASSES = 9
+BATCH_SIZE = 40 # (can be customized) maximum 40 images will be used for training (can be customized)
+EPOCHS = 10 # (can be customized) 1 epoch is a training/evaluating cycle more epochs means more accuracy (can be customized)
+NUM_CLASSES = 9 # (can be customized) 9 kind fruits can be identified (can be customized)
 
 class FruitClassifier:
     def __init__(self):
         self.model = None
-        self.class_names = ['apple fruit', 'banana fruit', 'cherry fruit', 'chickoo fruit', 'grapes fruit', 'kiwi fruit', 'mango fruit', 'orange fruit', 'strawberry fruit'] 
+        # (can be customized) You can change the names according to your app`s purpose (can be customized)
+        self.class_names = ['apple fruit', 'banana fruit', 'cherry fruit', 'chickoo fruit', 'grapes fruit', 'kiwi fruit', 'mango fruit', 'orange fruit', 'strawberry fruit']
 
     def create_model(self):
         """Creates a CNN model using transfer learning"""
@@ -99,7 +100,7 @@ class FruitClassifier:
 
         # Save the model
         os.makedirs('model', exist_ok=True)
-        self.model.save('model/fruit_model2.h5')
+        self.model.save('model/fruit_model2.h5')# (can be customized) You can change name of the generated model
         
         return history
 
