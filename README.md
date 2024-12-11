@@ -46,6 +46,8 @@
 
 <h2>How to Navigate to the Webpage:</h2>
 <p>After running the app, the terminal will pop up where you can find the address <code>http://localhost:5000</code> and follow the link to open the app in your browser.</p>
+<h2>Train/Customize your own model:</h2>
+<p>If you check the train.py file you can see command lines Tagged with "(can be customized)" indicating that these parts of the code can be customized.This way you can generate classifiers for other subject(cars, vegetables etc.)</p>
 
 </body>
 </html>
