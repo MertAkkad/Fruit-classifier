@@ -19,5 +19,5 @@ fi
 # Run the application
 python app.py
 
-# Navigate to the address automatically
+# Navigate to the address automatically(somehow not working)
 xdg-open http://localhost:5000
