@@ -5,7 +5,7 @@ body {
     background-position: center;
     margin: 0;
     padding: 0;
-    align-items: center ;
+    align-items: center;
 }
 
 .container {
@@ -14,8 +14,8 @@ body {
     display: flex;
     justify-content: space-between;
     height: auto;
-    
 }
+
 .container_form {
     width: 50%;
     margin: auto;
@@ -25,36 +25,31 @@ body {
     justify-content: center;
     height: auto;
     padding: 20px;
-   
     border-radius: 5px;
-    
 }
 
 header {
     background: rgba(46, 95, 0, 0.363);
     color: #ffffff;
-    padding:  0;
+    padding: 0;
     text-align: center;
-    position: relative; /* Pozisyonu ayarlamak için */
-    top: 0; /* Sayfanın en üstüne yerleştirmek için */
-    left: 0; /* Sayfanın sol kenarına yerleştirmek için */
-    right: 0; /* Sayfanın sağ kenarına yerleştirmek için */
-    margin: 0; /* Varsayılan margin'i sıfırlamak için */
-    z-index: 10; /* Diğer içeriklerin üstünde görünmesi için */
+    position: relative; /* Adjust position */
+    top: 0; /* Place at the top of the page */
+    left: 0; /* Place at the left edge of the page */
+    right: 0; /* Place at the right edge of the page */
+    margin: 0; /* Reset default margin */
+    z-index: 10; /* To appear above other content */
 }
 
 h1 {
-    margin: 0; /* Varsayılan margin'i sıfırlamak için */
-    padding: 20px; /* Kenarlardan ayrık olması için padding ekleyin */
-    font-size: 48px; /* Başlık boyutunu artırın */
-    font-weight: bold; /* Kalın yazı stili */
-    color: rgb(255, 255, 255); /* Başlık rengini kırmızı yapın */
-    text-shadow: 2px 2px 4px rgb(0, 0, 0); /* Dış gölge efekti yeşil */
-    position: relative; /* Pozisyonu ayarlamak için */
+    margin: 0; /* Reset default margin */
+    padding: 20px; /* Add padding for separation */
+    font-size: 48px; /* Increase title size */
+    font-weight: bold; /* Bold text style */
+    color: rgb(255, 255, 255); /* Change title color to white */
+    text-shadow: 2px 2px 4px rgb(0, 0, 0); /* Outer shadow effect */
+    position: relative; /* Adjust position */
 }
-
-
-
 
 form {
     background: rgba(80, 88, 73, 0.363);
@@ -62,7 +57,6 @@ form {
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     align-self: center;
-    
 }
 
 input[type="file"] {
@@ -97,11 +91,7 @@ button:hover {
     width: 100%;
     box-sizing: border-box;
     height: max-content;
-    
 }
-
-
-
 
 #loading {
     display: none;
@@ -118,15 +108,16 @@ button:hover {
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0);
     overflow-y: auto;
-    
     height: 700px;
 }
+
 #preview {
     width: 300px;
     height: 300px;
     object-fit: cover;
     border-radius: 5px;
 }
+
 .fruit-name {
     font-size: 36px;
     font-weight: bold;

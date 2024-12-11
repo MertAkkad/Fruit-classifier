@@ -6,11 +6,11 @@ import os
 
 app = Flask(__name__)
 
-# Yapılandırma
+# Configuration
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max-limit
 
-# Model ve sınıflar
+# Model and classes
 MODEL_PATH = 'model/fruit_model2.h5'
 CLASSES = ['apple', 'banana', 'cherry', 'chickoo', 'grape', 'kiwi', 'mango', 'orange', 'strawberry']
 
@@ -19,7 +19,7 @@ class FruitClassifierApp:
         self.model = tf.keras.models.load_model(MODEL_PATH)
 
     def preprocess_image(self, image_path):
-        """Görüntüyü model için hazırlar"""
+        """Prepares the image for the model"""
         img = Image.open(image_path)
         img = img.resize((224, 224))
         img_array = tf.keras.preprocessing.image.img_to_array(img)
@@ -28,37 +28,37 @@ class FruitClassifierApp:
         return img_array
 
     def predict(self, image_path):
-        """Görüntü sınıflandırması yapar"""
+        """Performs image classification"""
         img_array = self.preprocess_image(image_path)
         predictions = self.model.predict(img_array)
         predicted_class = CLASSES[np.argmax(predictions[0])]
         confidence = float(np.max(predictions[0]))
         return predicted_class, confidence
 
-# Uygulama örneğini oluştur
+# Create an instance of the application
 classifier = FruitClassifierApp()
 
 @app.route('/')
 def index():
-    """Ana sayfa"""
+    """Homepage"""
     return render_template('index.html')
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    """Tahmin API'si"""
+    """Prediction API"""
     if 'file' not in request.files:
-        return jsonify({'error': 'Dosya yüklenmedi'})
+        return jsonify({'error': 'No file uploaded'})
     
     file = request.files['file']
     if file.filename == '':
-        return jsonify({'error': 'Dosya seçilmedi'})
+        return jsonify({'error': 'No file selected'})
     
     try:
-        # Dosyayı kaydet
+        # Save the file
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
         file.save(filepath)
         
-        # Tahmin yap
+        # Make a prediction
         predicted_class, confidence = classifier.predict(filepath)
         
         return jsonify({

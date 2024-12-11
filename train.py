@@ -4,12 +4,12 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import os
 import matplotlib.pyplot as plt
 
-# Sabit değişkenler
+# Constants
 DATASET_PATH = "dataset/train"
 IMAGE_SIZE = 224
 BATCH_SIZE = 40
 EPOCHS = 10
-NUM_CLASSES = 9  # Meyve sınıfı sayısı
+NUM_CLASSES = 9
 
 class FruitClassifier:
     def __init__(self):
@@ -17,16 +17,16 @@ class FruitClassifier:
         self.class_names = ['apple fruit', 'banana fruit', 'cherry fruit', 'chickoo fruit', 'grapes fruit', 'kiwi fruit', 'mango fruit', 'orange fruit', 'strawberry fruit'] 
 
     def create_model(self):
-        """Transfer learning ile CNN modeli oluşturur"""
-        # MobileNetV2'yi temel model olarak kullan
+        """Creates a CNN model using transfer learning"""
+        # Use MobileNetV2 as the base model
         base_model = tf.keras.applications.MobileNetV2(
             input_shape=(IMAGE_SIZE, IMAGE_SIZE, 3),
             include_top=False,
             weights='imagenet'
         )
-        base_model.trainable = False  # Temel modeli dondur
+        base_model.trainable = False  # Freeze the base model
 
-        # Modeli oluştur
+        # Build the model
         self.model = models.Sequential([
             base_model,
             layers.GlobalAveragePooling2D(),
@@ -35,7 +35,7 @@ class FruitClassifier:
             layers.Dense(NUM_CLASSES, activation='softmax')
         ])
 
-        # Modeli derle
+        # Compile the model
         self.model.compile(
             optimizer='adam',
             loss='categorical_crossentropy',
@@ -43,7 +43,7 @@ class FruitClassifier:
         )
 
     def prepare_dataset(self):
-        """Veri setini hazırlar ve veri artırma uygular"""
+        """Prepares the dataset and applies data augmentation"""
         train_datagen = ImageDataGenerator(
             rescale=1./255,
             rotation_range=20,
@@ -55,7 +55,7 @@ class FruitClassifier:
             validation_split=0.2
         )
 
-        # Eğitim verisi
+        # Training data
         train_generator = train_datagen.flow_from_directory(
             DATASET_PATH,
             target_size=(IMAGE_SIZE, IMAGE_SIZE),
@@ -64,7 +64,7 @@ class FruitClassifier:
             subset='training'
         )
 
-        # Doğrulama verisi
+        # Validation data
         validation_generator = train_datagen.flow_from_directory(
             DATASET_PATH,
             target_size=(IMAGE_SIZE, IMAGE_SIZE),
@@ -76,14 +76,14 @@ class FruitClassifier:
         return train_generator, validation_generator
 
     def train(self):
-        """Modeli eğitir ve kaydeder"""
-        # Veri setini hazırla
+        """Trains and saves the model"""
+        # Prepare the dataset
         train_generator, validation_generator = self.prepare_dataset()
 
-        # Modeli oluştur
+        # Create the model
         self.create_model()
 
-        # Eğitim
+        # Training
         history = self.model.fit(
             train_generator,
             epochs=EPOCHS,
@@ -97,30 +97,30 @@ class FruitClassifier:
             ]
         )
 
-        # Modeli kaydet
+        # Save the model
         os.makedirs('model', exist_ok=True)
         self.model.save('model/fruit_model2.h5')
         
         return history
 
     def plot_training_history(self, history):
-        """Eğitim metriklerinin grafiklerini çizer"""
+        """Plots the training metrics"""
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4))
         
-        # Doğruluk grafiği
-        ax1.plot(history.history['accuracy'], label='Eğitim')
-        ax1.plot(history.history['val_accuracy'], label='Doğrulama')
-        ax1.set_title('Model Doğruluğu')
+        # Accuracy graph
+        ax1.plot(history.history['accuracy'], label='Training')
+        ax1.plot(history.history['val_accuracy'], label='Validation')
+        ax1.set_title('Model Accuracy')
         ax1.set_xlabel('Epoch')
-        ax1.set_ylabel('Doğruluk')
+        ax1.set_ylabel('Accuracy')
         ax1.legend()
         
-        # Kayıp grafiği
-        ax2.plot(history.history['loss'], label='Eğitim')
-        ax2.plot(history.history['val_loss'], label='Doğrulama')
-        ax2.set_title('Model Kaybı')
+        # Loss graph
+        ax2.plot(history.history['loss'], label='Training')
+        ax2.plot(history.history['val_loss'], label='Validation')
+        ax2.set_title('Model Loss')
         ax2.set_xlabel('Epoch')
-        ax2.set_ylabel('Kayıp')
+        ax2.set_ylabel('Loss')
         ax2.legend()
         
         plt.tight_layout()
@@ -128,16 +128,16 @@ class FruitClassifier:
         plt.close()
 
 def main():
-    # Veri seti kontrolü
+    # Dataset check
     if not os.path.exists(DATASET_PATH):
-        print(f"Hata: {DATASET_PATH} klasörü bulunamadı!")
+        print(f"Error: {DATASET_PATH} directory not found!")
         return
 
-    # Model eğitimi
+    # Model training
     classifier = FruitClassifier()
     history = classifier.train()
     classifier.plot_training_history(history)
-    print("Model başarıyla eğitildi ve kaydedildi!")
+    print("Model successfully trained and saved!")
 
 if __name__ == "__main__":
     main()

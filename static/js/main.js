@@ -7,26 +7,26 @@ document.getElementById('upload-form').addEventListener('submit', async (e) => {
     const resultDiv = document.getElementById('result');
     
     if (!fileInput.files[0]) {
-        alert('Lütfen bir görüntü seçin');
+        alert('Please select an image');
         return;
     }
     
     formData.append('file', fileInput.files[0]);
     
     try {
-        // Yükleme başladığında
+        // When upload starts
         loadingDiv.style.display = 'block';
         resultDiv.style.display = 'none';
         
-        // Sunucuya gönder
+        // Send to server
         const response = await fetch('/predict', {
             method: 'POST',
             body: formData
         });
         
-        // Yanıtı kontrol et
+        // Check the response
         if (!response.ok) {
-            throw new Error('Sunucu hatası: ' + response.status);
+            throw new Error('Server error: ' + response.status);
         }
 
         const data = await response.json();
@@ -36,59 +36,58 @@ document.getElementById('upload-form').addEventListener('submit', async (e) => {
             return;
         }
         
-        // Sonuçları göster
+        // Show results
         document.getElementById('preview').src = data.image_path;
         document.getElementById('prediction').textContent = data.class;
         document.getElementById('confidence').textContent = 
-         `Trust: ${(data.confidence * 100).toFixed(2)}%`; // "Trust:" ifadesini ekledik
+         `Trust: ${(data.confidence * 100).toFixed(2)}%`; // Added "Trust:" expression
         
-        // Wikipedia'dan bilgi çek
+        // Fetch information from Wikipedia
         try {
             const wikiResponse = await fetch("https://en.wikipedia.org/w/api.php?action=query&prop=extracts&titles=" + encodeURIComponent(data.class) + "&format=json&origin=*");
             const wikiData = await wikiResponse.json();
         
-            // Yanıtı kontrol et
+            // Check the response
             console.log('Wiki Data:', wikiData);
             if (!wikiData.query || !wikiData.query.pages) {
-                throw new Error("Yanıt beklenmedik bir formatta.");
+                throw new Error("Response is in an unexpected format.");
             }
         
-            // Wikipedia bilgilerini göster
+            // Show Wikipedia information
             const wikiInfoDiv = document.getElementById('wiki-info');
             const pages = wikiData.query.pages;
         
-            // Sayfa bulunamadı kontrolü
+            // Check if the page was not found
             if (pages[-1]) {
-                console.log(`Aranan başlık: ${data.class} Wikipedia'da bulunamadı.`);
-                wikiInfoDiv.innerHTML = `<p>Bu meyve hakkında bilgi bulunamadı.</p>`;
+                console.log(`The searched title: ${data.class} was not found on Wikipedia.`);
+                wikiInfoDiv.innerHTML = `<p>No information found about this fruit.</p>`;
             } else {
-                const page = Object.values(pages)[0]; // İlk sayfayı al
+                const page = Object.values(pages)[0]; // Get the first page
                 console.log('Page:', page);
         
                 if (page.extract) {
                     wikiInfoDiv.innerHTML = `
                         <h3>${page.title}</h3>
                         <p>${page.extract}</p>
-                        <a href="https://en.wikipedia.org/wiki/${encodeURIComponent(page.title)}" target="_blank">Daha fazla bilgi için tıklayın</a>
+                        <a href="https://en.wikipedia.org/wiki/${encodeURIComponent(page.title)}" target="_blank">Click here for more information</a>
                     `;
                 } else {
-                    wikiInfoDiv.innerHTML = `<p>Bu meyve hakkında bilgi bulunamadı.</p>`;
+                    wikiInfoDiv.innerHTML = `<p>No information found about this fruit.</p>`;
                 }
             }
-
-            // wiki-info div'ini görünür hale getir
+            // Make the wiki-info div visible
             wikiInfoDiv.style.display = 'block';
         } catch (error) {
-            console.error('Wikipedia Hatası:', error);
-            alert('Wikipedia bilgileri çekilirken bir hata oluştu: ' + error.message);
+            console.error('Wikipedia Error:', error);
+            alert('An error occurred while fetching Wikipedia information: ' + error.message);
         }
         
-        // Sonuç div'ini görünür hale getir
+        // Make the result div visible
         resultDiv.style.display = 'block';
         
     } catch (error) {
-        console.error('Genel Hata:', error);
-        alert('Bir hata oluştu: ' + error.message);
+        console.error('General Error:', error);
+        alert('An error occurred: ' + error.message);
     } finally {
         loadingDiv.style.display = 'none';
     }
