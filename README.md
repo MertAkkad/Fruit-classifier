@@ -2,6 +2,11 @@
 
 About The App:
 
+
+
+
+
+
 This Web app Classifies an uploaded image of a fruit and displays additional information about the identified fruit.
       
 NOTICE: The Following Instructions Are Linux OS.
