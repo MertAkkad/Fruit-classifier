@@ -1,43 +1,54 @@
-# Fruit-classifier
- 
-#About The App:
 
-This Web app Classifies an uploaded image of a fruit and displays additional information about the identified fruit.
+
+
+<h1>About The App</h1>
+<p>This Web app Classifies an uploaded image of a fruit and displays additional information about the identified fruit.</p>
+
+<h2>NOTICE:</h2>
+<p>The Following Instructions Are for Linux OS.</p>
+
+<h2>How To Run the App:</h2>
+
+<p>First the repository must be cloned by executing the following command on your terminal:</p>
+   
+   
+    git clone https://github.com/MertAkkad/Fruit-classifier.git
+
+     
+<p>You can run the app <strong>AUTOMATICALLY</strong> by running the <code>run.sh</code> file (Double left-click or right-click + run as a program).</p>
+
+<p><strong>NOTE:</strong> The virtual environment will be created and the required modules will be installed automatically.</p>
+
+<p>You can also run the app <strong>MANUALLY</strong> by executing the following commands on your terminal:</p>
+
+</pre>
+- Navigate to project directory:</pre>
       
-NOTICE: The Following Instructions Are Linux OS.
-
-How To Run the App:
-
-You can run the app AUTOMATICALLY by running the run.sh file(Double left-click or right-click+run as a program).
-
- ***NOTE: virtual environment will be created and the required modules will be installed automatically
-
-You can also run the app MANUALLY by executing the following commands on your terminal:
-
-- Navigate to project directory:
-    
       cd Fruit-classifier
       
-- Create virtual environment:
-        
-      python3 -m venv myenv
+</pre>
+- Create virtual environment:</pre>
       
-- activate virtual environment:
-    
+      python3 -m venv myenv
+ </pre>     
+- Activate virtual environment:</pre>
+      
       source venv/bin/activate
-    
-- Install the required modules:
-    
+ </pre>   
+- Install the required modules:</pre>
+      
       pip install -r requirements.txt
-    
-- Run app.py:
-    
-      Python3 app.py
-  
-  
-How Navigate to the webpage:
+</pre>    
+- Run app.py:</pre>
+      
+      python3 app.py
 
-After running the app the terminal will pop up where you can find the address http://localhost:5000 and follow the link to open the app on your browser.
+
+<h2>How to Navigate to the Webpage:</h2>
+<p>After running the app, the terminal will pop up where you can find the address <code>http://localhost:5000</code> and follow the link to open the app in your browser.</p>
+
+</body>
+</html>
 
 
 
